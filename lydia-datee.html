@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Für Lydia</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#1a1320;--bg2:#241829;--rose:#ff5d8f;--rose-deep:#e23e6f;--blush:#ffb3c8;--cream:#fff4ea;--gold:#f4c06b;--ink:#2a1d2c;--green:#1f8a5b;}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{font-family:'Outfit',system-ui,sans-serif;background:radial-gradient(120% 80% at 15% 0%, #3a2336 0%, transparent 55%),radial-gradient(120% 90% at 90% 100%, #4a2238 0%, transparent 50%),linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);color:var(--cream);min-height:100dvh;overflow-x:hidden;position:relative;}
+  body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .pack{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .pack .doxie{position:absolute;opacity:.16;filter:saturate(.8);}
+  .pack .doxie.bob{animation:bob 6s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,0deg));}50%{transform:translateY(-14px) rotate(var(--r,0deg));}}
+  .stage{position:relative;z-index:10;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px 18px;}
+  .page{display:none;width:100%;max-width:560px;animation:rise .6s cubic-bezier(.2,.8,.2,1) both;}
+  .page.active{display:block;}
+  @keyframes rise{from{opacity:0;transform:translateY(24px) scale(.98);}to{opacity:1;transform:none;}}
+  .card{position:relative;background:linear-gradient(165deg, rgba(255,244,234,.97), rgba(255,238,228,.95));color:var(--ink);border-radius:30px;padding:42px 30px 38px;box-shadow:0 30px 70px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.25) inset;text-align:center;overflow:hidden;}
+  .card::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--rose),var(--gold),var(--rose-deep));}
+  .eyebrow{font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose-deep);font-weight:600;margin-bottom:14px;}
+  h1{font-family:'Fraunces',serif;font-weight:600;line-height:1.08;font-size:clamp(1.9rem,6.5vw,2.8rem);color:var(--ink);letter-spacing:-.01em;}
+  h1 .accent{color:var(--rose-deep);font-style:italic;}
+  .sub{margin-top:14px;font-size:1.02rem;color:#6b5563;line-height:1.5;font-weight:400;}
+  .hero-doxie{margin:22px auto 6px;width:150px;}
+  .btns{margin-top:26px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .btn{font-family:'Outfit';font-weight:600;font-size:1.05rem;padding:15px 30px;border-radius:100px;border:none;cursor:pointer;transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s;}
+  .btn-yes{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;box-shadow:0 12px 26px -8px var(--rose-deep);}
+  .btn-yes:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 34px -8px var(--rose-deep);}
+  .btn-yes:active{transform:scale(.97);}
+  .btn-no{position:fixed;z-index:60;background:var(--cream);color:#9a7d88;border:2px solid #e8cdd6;font-weight:600;font-size:1rem;padding:13px 26px;border-radius:100px;box-shadow:0 8px 20px -10px rgba(0,0,0,.4);transition:left .35s cubic-bezier(.2,.9,.2,1), top .35s cubic-bezier(.2,.9,.2,1);}
+  .nudge{margin-top:18px;min-height:24px;font-size:.95rem;color:var(--rose-deep);font-weight:500;font-style:italic;opacity:0;transition:opacity .3s;}
+  .nudge.show{opacity:1;}
+  .grid{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  .opt{position:relative;background:#fff;border:2px solid #f0d9e0;border-radius:20px;padding:20px 14px;cursor:pointer;text-align:center;transition:transform .18s, box-shadow .18s, border-color .18s, background .18s;}
+  .opt:hover{transform:translateY(-4px);box-shadow:0 16px 30px -14px rgba(226,62,111,.5);border-color:var(--rose);}
+  .opt.sel{background:linear-gradient(135deg,#fff0f5,#ffe3ec);border-color:var(--rose-deep);box-shadow:0 14px 28px -14px rgba(226,62,111,.55);}
+  .opt .ic{font-size:1.7rem;display:block;margin-bottom:7px;}
+  .opt .lb{font-weight:600;font-size:.92rem;color:var(--ink);line-height:1.25;}
+  .opt .chk{position:absolute;top:9px;right:10px;width:22px;height:22px;border-radius:50%;background:var(--rose-deep);color:#fff;display:none;align-items:center;justify-content:center;font-size:.8rem;}
+  .opt.sel .chk{display:flex;}
+  .opt.special{grid-column:1/-1;background:linear-gradient(135deg, #2a1d2c, #44263c);border:2px solid var(--gold);color:var(--cream);}
+  .opt.special .lb{color:var(--cream);font-family:'Fraunces',serif;font-size:1.04rem;}
+  .opt.special .tag{display:block;margin-top:6px;font-size:.76rem;letter-spacing:.04em;color:var(--gold);font-family:'Outfit';font-weight:500;}
+  .opt.special:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 20px 40px -16px rgba(244,192,107,.5);}
+  .opt.kdk{position:relative;z-index:61;background:#fff;border:2px dashed #c9b3bd;color:#9a7d88;transition:left .3s cubic-bezier(.2,.9,.2,1), top .3s cubic-bezier(.2,.9,.2,1);}
+  .go-wrap{margin-top:24px;display:none;}
+  .go-wrap.show{display:block;}
+  .btn-go{background:linear-gradient(135deg,var(--gold),#e0a14b);color:var(--ink);font-weight:700;box-shadow:0 12px 26px -8px rgba(244,192,107,.6);}
+  .btn-go:hover{transform:translateY(-3px) scale(1.04);}
+  .seal{width:96px;margin:0 auto 10px;}
+  .final-note{margin-top:16px;font-size:1.05rem;line-height:1.6;color:#5c4753;}
+  .final-note b{color:var(--rose-deep);}
+  .picked{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .pill{background:#fff0f5;border:1.5px solid #f0c9d6;color:var(--rose-deep);font-weight:600;font-size:.85rem;padding:7px 14px;border-radius:100px;}
+  .send-row{margin-top:22px;}
+  .hint{margin-top:14px;font-size:.82rem;color:#9a7d88;line-height:1.45;}
+  /* CALENDAR */
+  .cal{margin-top:24px;background:#fff;border:2px solid #f0d9e0;border-radius:22px;padding:18px 16px 20px;box-shadow:0 14px 34px -20px rgba(226,62,111,.4);}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .cal-head button{width:38px;height:38px;border-radius:50%;border:none;background:#fff0f5;color:var(--rose-deep);font-size:1.2rem;cursor:pointer;font-weight:700;transition:background .15s,transform .15s;}
+  .cal-head button:hover{background:#ffe0ec;transform:scale(1.08);}
+  .cal-head button:disabled{opacity:.3;cursor:not-allowed;}
+  .cal-title{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--ink);font-weight:600;}
+  .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;}
+  .cal-dow span{text-align:center;font-size:.68rem;font-weight:700;letter-spacing:.06em;color:#b89aa6;text-transform:uppercase;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .cal-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:.95rem;font-weight:600;color:var(--ink);cursor:pointer;transition:background .12s,color .12s,transform .12s;}
+  .cal-cell.empty{cursor:default;}
+  .cal-cell.past{color:#d8c4cd;cursor:not-allowed;}
+  .cal-cell.today{box-shadow:inset 0 0 0 2px var(--gold);}
+  .cal-cell.avail:hover{background:#ffe0ec;transform:scale(1.08);}
+  .cal-cell.sel{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;box-shadow:0 6px 16px -6px var(--rose-deep);}
+  .cal-picked{margin-top:14px;font-size:.92rem;color:var(--rose-deep);font-weight:600;min-height:22px;}
+  /* FLIXTRAIN-STYLE TRIP PROPOSAL */
+  .ticket{margin-top:22px;background:#0e3a2e;color:#eafff5;border-radius:20px;padding:0;overflow:hidden;text-align:left;box-shadow:0 16px 40px -18px rgba(0,0,0,.5);position:relative;}
+  .ticket .tk-top{background:#13b463;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+  .ticket .tk-brand{font-weight:700;font-size:1.05rem;letter-spacing:.02em;color:#06281c;}
+  .ticket .tk-badge{background:rgba(255,255,255,.85);color:#06281c;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;}
+  .ticket .tk-body{padding:18px 20px 20px;}
+  .ticket .tk-route{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.2rem;}
+  .ticket .tk-route .arr{color:#7fd9ad;font-size:.95rem;}
+  .ticket .tk-times{display:flex;align-items:center;gap:12px;margin-top:12px;}
+  .ticket .tk-times .col{text-align:center;}
+  .ticket .tk-times .tt{font-family:'Fraunces',serif;font-size:1.35rem;line-height:1;}
+  .ticket .tk-times .ts{font-size:.68rem;color:#7fd9ad;margin-top:3px;letter-spacing:.04em;}
+  .ticket .tk-times .line{flex:1;height:2px;background:repeating-linear-gradient(90deg,#3a7d63 0 6px,transparent 6px 12px);position:relative;}
+  .ticket .tk-times .line::after{content:'';position:absolute;right:-1px;top:-3px;width:8px;height:8px;border-top:2px solid #3a7d63;border-right:2px solid #3a7d63;transform:rotate(45deg);}
+  .ticket .tk-grid{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;font-size:.85rem;}
+  .ticket .tk-grid .k{color:#7fd9ad;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;}
+  .ticket .tk-grid .v{font-weight:600;margin-top:2px;color:#eafff5;}
+  .ticket .tk-foot{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.25);font-size:.8rem;color:#bff3d8;line-height:1.4;}
+  .ticket .perf{position:absolute;left:-9px;top:54px;width:18px;height:18px;border-radius:50%;background:var(--cream);}
+  .ticket .perf.r{left:auto;right:-9px;}
+  canvas#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;}
+  @media(max-width:380px){.card{padding:34px 20px 30px;}.grid{gap:10px;}.opt{padding:16px 10px;}.opt .lb{font-size:.86rem;}}
+</style>
+</head>
+<body>
+
+<div class="pack" id="pack"></div>
+<canvas id="cf"></canvas>
+
+<svg style="display:none">
+<symbol id="doxie-sym" viewBox="0 0 220 120">
+  <ellipse cx="110" cy="108" rx="74" ry="9" fill="#000" opacity="0.12"/>
+  <rect x="150" y="74" width="12" height="30" rx="6" fill="#9a5a2c"/><rect x="58" y="74" width="12" height="30" rx="6" fill="#9a5a2c"/>
+  <path d="M44 70 Q40 44 70 42 L150 42 Q182 42 184 64 Q186 86 156 86 L70 86 Q46 86 44 70 Z" fill="#b9712f"/>
+  <rect x="70" y="76" width="12" height="30" rx="6" fill="#a8622c"/><rect x="138" y="76" width="12" height="30" rx="6" fill="#a8622c"/>
+  <path d="M44 64 Q22 58 18 40" stroke="#b9712f" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <ellipse cx="158" cy="74" rx="20" ry="14" fill="#d89a5e" opacity="0.6"/>
+  <ellipse cx="170" cy="50" rx="30" ry="26" fill="#c47b34"/>
+  <path d="M186 50 Q212 48 210 62 Q208 72 190 68 Z" fill="#b9712f"/>
+  <circle cx="208" cy="60" r="5" fill="#3a2418"/>
+  <path d="M150 36 Q140 34 142 58 Q144 74 158 66 Q160 48 150 36 Z" fill="#8a4f24"/>
+  <circle cx="176" cy="46" r="4.5" fill="#2a1810"/><circle cx="177.5" cy="44.5" r="1.4" fill="#fff"/>
+  <circle cx="162" cy="58" r="5" fill="#ff8da6" opacity="0.4"/>
+</symbol>
+</svg>
+
+<div class="stage">
+
+  <!-- PAGE 1 -->
+  <section class="page active" id="p1">
+    <div class="card">
+      <div class="eyebrow">Eine Frage an dich</div>
+      <svg class="hero-doxie" viewBox="0 0 220 120"><use href="#doxie-sym"/></svg>
+      <h1>Lydia, gehst du mit mir auf ein <span class="accent">Date?</span></h1>
+      <p class="sub">Sag einfach ja, Maus. Der andere Knopf ist… etwas schüchtern.</p>
+      <div class="btns"><button class="btn btn-yes" onclick="toPage2()">Ja, total</button></div>
+      <div class="nudge" id="nudge1"></div>
+    </div>
+  </section>
+  <button class="btn-no" id="noBtn">Nein</button>
+
+  <!-- PAGE 2 -->
+  <section class="page" id="p2">
+    <div class="card">
+      <div class="eyebrow">Schritt zwei</div>
+      <h1>Worauf hast du <span class="accent">Lust?</span></h1>
+      <p class="sub">Such dir aus, worauf du Lust hast — gern mehrere, Maus.</p>
+      <div class="grid" id="grid">
+        <div class="opt" data-lab="Euphoria gucken" onclick="pick(this)"><span class="chk">✓</span><span class="ic">📺</span><span class="lb">Euphoria gucken</span></div>
+        <div class="opt" data-lab="Spiderman gucken" onclick="pick(this)"><span class="chk">✓</span><span class="ic">🕷️</span><span class="lb">Spiderman gucken</span></div>
+        <div class="opt" data-lab="Massiert werden" onclick="pick(this)"><span class="chk">✓</span><span class="ic">💆</span><span class="lb">Massiert werden</span></div>
+        <div class="opt" data-lab="Du massierst mich" onclick="pick(this)"><span class="chk">✓</span><span class="ic">👀</span><span class="lb">Du massierst mich 👀</span></div>
+        <div class="opt" data-lab="Netflix & wirklich chillen" onclick="pick(this)"><span class="chk">✓</span><span class="ic">😏</span><span class="lb">Netflix & wirklich chillen</span></div>
+        <div class="opt" data-lab="Spa Tag" onclick="pick(this)"><span class="chk">✓</span><span class="ic">🧖</span><span class="lb">Spa Tag</span></div>
+        <div class="opt" data-lab="Bad bei Kerzenlicht" onclick="pick(this)"><span class="chk">✓</span><span class="ic">🕯️</span><span class="lb">Bad bei Kerzenlicht</span></div>
+        <div class="opt" data-lab="Sternenhimmel auf der Decke" onclick="pick(this)"><span class="chk">✓</span><span class="ic">✨</span><span class="lb">Sterne gucken auf der Decke</span></div>
+        <div class="opt kdk" id="kdkOpt"><span class="ic">🎨</span><span class="lb">KdK</span></div>
+        <div class="opt special" data-lab="Alles zusammen mit Sharif in Leipzig" onclick="pick(this)">
+          <span class="chk">✓</span><span class="ic">🩷</span>
+          <span class="lb">Alles zusammen — mit Sharif in Leipzig</span>
+          <span class="tag">sobald 18 Punkte geschrieben wurden ✦</span>
+        </div>
+      </div>
+      <div class="go-wrap" id="goWrap"><button class="btn btn-go" onclick="toPage3()">Weiter zum Termin →</button></div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: KALENDER -->
+  <section class="page" id="p3">
+    <div class="card">
+      <div class="eyebrow">Schritt drei</div>
+      <h1>Wann kommst du <span class="accent">nach Leipzig?</span></h1>
+      <p class="sub">Tipp deinen Wunschtag im Kalender an.</p>
+      <div class="cal">
+        <div class="cal-head">
+          <button id="prevM" aria-label="zurück">‹</button>
+          <div class="cal-title" id="calTitle">—</div>
+          <button id="nextM" aria-label="vor">›</button>
+        </div>
+        <div class="cal-dow"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="cal-picked" id="calPicked"></div>
+      <div class="go-wrap" id="goWrap2"><button class="btn btn-go" onclick="toConfirm()">Reise planen →</button></div>
+    </div>
+  </section>
+
+  <!-- PAGE 4: FLIXTRAIN PROPOSAL -->
+  <section class="page" id="p4">
+    <div class="card">
+      <div class="eyebrow">Reisevorschlag</div>
+      <h1>So kommst du zu <span class="accent">mir</span></h1>
+      <p class="sub">So hol ich dich nach Leipzig, Maus — buchen tu ich das dann.</p>
+
+      <div class="ticket">
+        <span class="perf"></span><span class="perf r"></span>
+        <div class="tk-top">
+          <span class="tk-brand">FlixTrain</span>
+          <span class="tk-badge">Vorschlag</span>
+        </div>
+        <div class="tk-body">
+          <div class="tk-route">Heidelberg Hbf <span class="arr">────►</span> Leipzig Hbf</div>
+          <div class="tk-times">
+            <div class="col"><div class="tt">09:14</div><div class="ts">Heidelberg Hbf</div></div>
+            <div class="line"></div>
+            <div class="col"><div class="tt">14:58</div><div class="ts">Leipzig Hbf</div></div>
+          </div>
+          <div class="tk-grid">
+            <div><div class="k">Datum</div><div class="v" id="tkDate">—</div></div>
+            <div><div class="k">Fahrtzeit</div><div class="v">ca. 5 h 44 · 1 Umstieg (Frankfurt)</div></div>
+            <div><div class="k">Zug</div><div class="v">FLX 1278 → FLX 1542</div></div>
+            <div><div class="k">Wunsch-Sitzplatz</div><div class="v">Fenster · Tisch</div></div>
+            <div><div class="k">Status</div><div class="v">buche ich für dich</div></div>
+          </div>
+          <div class="tk-foot">Noch keine fertige Buchung — sobald du mir Bescheid gibst, buche ich dir das Ticket, Maus.</div>
+        </div>
+      </div>
+
+      <div class="send-row"><button class="btn btn-yes" onclick="sendMail()">📩 Schick's mir, Maus</button></div>
+      <p class="hint">Deine Mail-App geht auf — ich hab dir schon alles vorgeschrieben. Einmal auf <b>Senden</b> tippen und den Rest mach ich 💌</p>
+    </div>
+  </section>
+
+  <!-- PAGE 5: DONE -->
+  <section class="page" id="p5">
+    <div class="card">
+      <svg class="seal" viewBox="0 0 220 120"><use href="#doxie-sym"/></svg>
+      <div class="eyebrow">Abgeschickt</div>
+      <h1>Es ist <span class="accent">offiziell</span> 🎉</h1>
+      <p class="final-note">Hab alles bekommen, Maus — Tag, deine Wünsche und die Fahrt.<br>Ich buch dir das Ticket und freu mich auf dich in Leipzig 🩷</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* scatter dackel */
+(function(){const pack=document.getElementById('pack');const N=window.innerWidth<500?6:11;
+  for(let i=0;i<N;i++){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 220 120');s.classList.add('doxie');if(Math.random()>.4)s.classList.add('bob');const w=60+Math.random()*90;s.style.width=w+'px';s.style.left=Math.random()*92+'vw';s.style.top=Math.random()*90+'vh';const r=(-18+Math.random()*36).toFixed(1);s.style.setProperty('--r',r+'deg');s.style.transform='rotate('+r+'deg)';s.style.animationDelay=(-Math.random()*6)+'s';s.innerHTML='<use href="#doxie-sym"/>';pack.appendChild(s);}})();
+
+/* runaway NO */
+const noBtn=document.getElementById('noBtn'),nudge1=document.getElementById('nudge1');let noN=0;
+function placeNo(){noBtn.style.left='calc(50% + 70px)';noBtn.style.top='auto';noBtn.style.bottom='38px';}placeNo();
+const lines=['bist du dir sicher?','wirklich?','der hund guckt traurig 🐶','denk nochmal drüber nach','letzte chance…','okok, der Knopf gibt nicht auf'];
+function flee(){noN++;const bw=noBtn.offsetWidth,bh=noBtn.offsetHeight,m=14;const x=m+Math.random()*(window.innerWidth-bw-2*m);const y=m+Math.random()*(window.innerHeight-bh-2*m);noBtn.style.bottom='auto';noBtn.style.left=x+'px';noBtn.style.top=y+'px';nudge1.textContent=lines[Math.min(noN-1,lines.length-1)];nudge1.classList.add('show');}
+noBtn.addEventListener('mouseenter',flee);
+noBtn.addEventListener('click',function(e){e.preventDefault();flee();});
+noBtn.addEventListener('touchstart',function(e){e.preventDefault();flee();},{passive:false});
+
+/* runaway KdK */
+const kdk=document.getElementById('kdkOpt');
+function fleeKdk(e){if(e)e.preventDefault();if(kdk.style.position!=='fixed'){kdk.style.position='fixed';kdk.style.width='120px';kdk.style.margin='0';}const bw=kdk.offsetWidth,bh=kdk.offsetHeight,m=14;const x=m+Math.random()*(window.innerWidth-bw-2*m);const y=m+Math.random()*(window.innerHeight-bh-2*m);kdk.style.left=x+'px';kdk.style.top=y+'px';}
+kdk.addEventListener('mouseenter',fleeKdk);
+kdk.addEventListener('click',fleeKdk);
+kdk.addEventListener('touchstart',fleeKdk,{passive:false});
+
+/* nav */
+function toPage2(){document.getElementById('p1').classList.remove('active');noBtn.style.display='none';document.getElementById('p2').classList.add('active');window.scrollTo(0,0);}
+
+/* options */
+const chosen=new Set();
+function pick(el){const lab=el.dataset.lab;if(chosen.has(lab)){chosen.delete(lab);el.classList.remove('sel');}else{chosen.add(lab);el.classList.add('sel');}document.getElementById('goWrap').classList.toggle('show',chosen.size>0);}
+function toPage3(){document.getElementById('p2').classList.remove('active');document.getElementById('p3').classList.add('active');window.scrollTo(0,0);renderCal();}
+
+/* CALENDAR */
+const MONTHS=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const today=new Date();today.setHours(0,0,0,0);
+let viewY=today.getFullYear(),viewM=today.getMonth();
+let chosenDate=null;
+function renderCal(){
+  const grid=document.getElementById('calGrid');grid.innerHTML='';
+  document.getElementById('calTitle').textContent=MONTHS[viewM]+' '+viewY;
+  // disable prev if at current month
+  const prevBtn=document.getElementById('prevM');
+  prevBtn.disabled=(viewY===today.getFullYear()&&viewM===today.getMonth());
+  const first=new Date(viewY,viewM,1);
+  let startDow=(first.getDay()+6)%7; // Mon=0
+  const daysInMonth=new Date(viewY,viewM+1,0).getDate();
+  for(let i=0;i<startDow;i++){const c=document.createElement('div');c.className='cal-cell empty';grid.appendChild(c);}
+  for(let d=1;d<=daysInMonth;d++){
+    const c=document.createElement('div');c.className='cal-cell';c.textContent=d;
+    const cellDate=new Date(viewY,viewM,d);cellDate.setHours(0,0,0,0);
+    if(cellDate.getTime()===today.getTime())c.classList.add('today');
+    if(cellDate<today){c.classList.add('past');}
+    else{c.classList.add('avail');
+      c.addEventListener('click',function(){
+        document.querySelectorAll('.cal-cell.sel').forEach(x=>x.classList.remove('sel'));
+        c.classList.add('sel');
+        chosenDate=cellDate;
+        const dow=['So','Mo','Di','Mi','Do','Fr','Sa'][cellDate.getDay()];
+        chosenDate._str=dow+', '+d+'. '+MONTHS[viewM]+' '+viewY;
+        document.getElementById('calPicked').textContent='Ausgewählt: '+chosenDate._str;
+        document.getElementById('goWrap2').classList.add('show');
+      });
+    }
+    if(chosenDate&&cellDate.getTime()===chosenDate.getTime())c.classList.add('sel');
+    grid.appendChild(c);
+  }
+}
+document.getElementById('prevM').addEventListener('click',function(){if(this.disabled)return;viewM--;if(viewM<0){viewM=11;viewY--;}renderCal();});
+document.getElementById('nextM').addEventListener('click',function(){viewM++;if(viewM>11){viewM=0;viewY++;}renderCal();});
+
+function toConfirm(){
+  if(!chosenDate)return;
+  document.getElementById('tkDate').textContent=chosenDate._str;
+  document.getElementById('p3').classList.remove('active');
+  document.getElementById('p4').classList.add('active');window.scrollTo(0,0);
+}
+
+/* mail */
+function sendMail(){
+  const to='sharifibr@icloud.com';
+  const subject='Mein Date mit Lydia in Leipzig';
+  const NL='\r\n';
+  let L=[];
+  L.push('Meine Lydia, meine Maus,');L.push('');
+  L.push('du hast ja gesagt - und ich freu mich riesig.');L.push('');
+  L.push('Hier ist alles, was ich fuer uns festgehalten habe:');L.push('');
+  L.push('WANN ich dich nach Leipzig hole:');
+  L.push('- '+(chosenDate?chosenDate._str:'(noch kein Tag gewaehlt)'));
+  L.push('');
+  L.push('DEINE FAHRT (FlixTrain, buche ich fuer dich):');
+  L.push('- Strecke: Heidelberg Hbf -> Leipzig Hbf');
+  L.push('- Abfahrt 09:14, Ankunft 14:58 (ca. 5h44, 1 Umstieg Frankfurt)');
+  L.push('- Zug: FLX 1278 -> FLX 1542');
+  L.push('- Sitzplatz fuer dich: Fenster, Tisch');
+  L.push('');
+  L.push('WAS WIR ZUSAMMEN MACHEN, Maus:');
+  if(chosen.size===0){L.push('- (such ich mit dir zusammen aus)');}
+  else{chosen.forEach(c=>{L.push('- '+c.replace(/[^\x00-\x7F]/g,'').trim());});}
+  L.push('');
+  L.push('Ich kuemmer mich um den Rest. Bis ganz bald in Leipzig.');
+  L.push('Dein Sharif');
+  const body=L.join(NL);
+  const url='mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  const a=document.createElement('a');a.href=url;a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);},400);
+  setTimeout(function(){document.getElementById('p4').classList.remove('active');document.getElementById('p5').classList.add('active');window.scrollTo(0,0);burst();},900);
+}
+
+/* confetti */
+function burst(){const cv=document.getElementById('cf'),x=cv.getContext('2d');function size(){cv.width=innerWidth;cv.height=innerHeight;}size();
+  const cols=['#ff5d8f','#e23e6f','#f4c06b','#ffb3c8','#fff4ea','#13b463'];let P=[];
+  function spawn(){for(let i=0;i<160;i++){P.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,w:6+Math.random()*9,h:6+Math.random()*9,c:cols[~~(Math.random()*cols.length)],vx:-2.5+Math.random()*5,vy:2+Math.random()*5,r:Math.random()*6.28,vr:-.2+Math.random()*.4});}}
+  spawn();setTimeout(spawn,1400);let frames=0;
+  (function loop(){frames++;x.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore();});P=P.filter(p=>p.y<cv.height+30);if(P.length>0&&frames<700)requestAnimationFrame(loop);else x.clearRect(0,0,cv.width,cv.height);})();}
+</script>
+</body>
+</html>
